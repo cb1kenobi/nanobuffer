@@ -83,8 +83,7 @@ console.log(buffer.size); // 2
 
 #### `push(value)`
 
-Adds a value to the buffer. If the buffer is full, then the oldest value is overwritten with this
-new value.
+Adds a value to the buffer. If the buffer is full, then the oldest value is overwritten with this new value.
 
 Values being stored can be any data type.
 
@@ -96,6 +95,18 @@ buffer
 	.push('hello')
 	.push(123)
 	.push({ foo: 'bar' });
+```
+
+#### `pop()`
+
+Removes the last element from an array and returns it. If the buffer is empty just returns undefined. Note, for a minor optimization, the method eliminates popped object from the buffer.
+
+```js
+const buffer = new NanoBuffer;
+buffer
+	.push('hello')
+	.push('world');
+console.log(buffer.pop(), buffer.pop()) // world hello
 ```
 
 #### `clear()`

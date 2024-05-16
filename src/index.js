@@ -111,6 +111,33 @@ export class NanoBuffer {
 	}
 
 	/**
+	 * The analog of usual `Array.pop` method
+	 *
+	 * @returns {*} the last element, undefined on empty buffer
+	 * @access public
+	 */
+	pop() {
+		if (this._maxSize && this._size > 0) {
+			let currentIndex = this._head;
+			const currentValue = this._buffer[currentIndex];
+			let ret = this._buffer[this._head--];
+
+			if (this._head < 0) {
+				// be back wrapped
+				this._head += this._maxSize;
+			}
+
+			this._size = Math.max(this._size - 1, 0);
+			if (currentValue !== undefined) {
+				delete this._buffer[currentIndex];
+			}
+			return ret;
+		}
+
+		return undefined;
+	}
+
+	/**
 	 * Inserts a new value into the buffer.
 	 *
 	 * @param {*} value - The value to store.
@@ -124,12 +151,17 @@ export class NanoBuffer {
 			}
 
 			if (this._head >= this._maxSize) {
-				// we wrapped
+				// be wrapped
 				this._head = 0;
 			}
 
 			this._size = Math.min(this._size + 1, this._maxSize);
-			this._buffer[this._head] = value;
+			const currentValue = this._buffer[this._head];
+			if (value !== undefined) {
+				this._buffer[this._head] = value;
+			} else if (currentValue !== undefined) {
+				delete this._buffer[this._head];
+			}
 		}
 
 		return this;
