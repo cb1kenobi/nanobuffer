@@ -114,6 +114,53 @@ buffer.clear();
 console.log(buffer.size); // 0
 ```
 
+#### `top(index=0)`
+
+Get array's last element (or stack's top) without need to deal with iterator. If buffer is empty, returns `undefined`. 
+
+```js
+const buffer = new NanoBuffer;
+
+buffer.push('hi');
+buffer.push('world');
+console.log(buffer.top()); // world
+```
+
+Optionally argument `index` get element before the array's last (or below the top stack). If `index` greater then buffer max size - returns `undefined`
+
+```js
+const buffer = new NanoBuffer;
+
+buffer.push('hi');
+buffer.push('world');
+console.log(buffer.top(1)); // hi
+```
+
+#### `bottom(index=0)`
+
+Get head (or stack's bottom) element from the buffer without need to deal with iterator. If buffer is empty, returns `undefined`. 
+
+```js
+const buffer = new NanoBuffer;
+
+buffer.push('hi');
+buffer.push('world');
+console.log(buffer.bottom()); // hi
+```
+
+Optionally argument `index` get element before the array's first possible one after getting the buffer wrapped or not wrapped.
+
+```js
+const buffer = new NanoBuffer(5);
+const fox = 'The quick brown fox jumps over the lazy dog'
+fox.split(' ').forEach((word) => {
+	b.push(word)
+})
+console.log(buffer.bottom()); // fox
+console.log(buffer.bottom(1)); // jumps
+console.log(buffer.top()); // dog
+```
+
 #### `[Symbol.iterator]()`
 
 Returns an iterator that can be used in a for-of loop.
