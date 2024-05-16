@@ -1,7 +1,5 @@
-import chai from 'chai';
+import { expect } from 'chai';
 import NanoBuffer from '../src/index.js';
-
-const { expect } = chai;
 
 describe('NanoBuffer', () => {
 	it('should throw error if invalid max size', () => {
