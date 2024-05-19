@@ -151,11 +151,17 @@ export class NanoBuffer {
 	/**
 	 * Creates an iterator function for this buffer.
 	 *
+	 * @param {boolean} back creates back iterator
+	 * @param {Number} startFrom defines iteration start index, rather than 0 (by default)
 	 * @return {Function}
-	 * @access public
+	 * @deprecated use {NanoBuffer#iterator} instead
+	 * @access private
 	 */
-	[Symbol.iterator]() {
-		let i = 0;
+	[Symbol.iterator](back = false, startFrom = 0) {
+		let i = startFrom;
+		if (startFrom < 0) {
+			i = this._maxSize + startFrom;
+		}
 
 		return {
 			next: () => {
@@ -163,7 +169,7 @@ export class NanoBuffer {
 				i = Math.min(i, this._maxSize);
 
 				// calculate the index
-				let j = this._head + i - (this._size - 1);
+				let j = back ? this._head - i : this._head + i - (this._size - 1);
 				if (j < 0) {
 					j += this._maxSize;
 				}
@@ -177,6 +183,19 @@ export class NanoBuffer {
 				};
 			}
 		};
+	}
+
+	/**
+	 * Creates a manual iterator function for this buffer.
+	 * Basiclly, this is an alias of {@link NanoBuffer#[Symbol.iterator]} method
+	 *
+	 * @param {boolean} back creates reverse iterator
+	 * @param {Number} startFrom defines iteration start index, rather than 0 (by default). It supports negative argument as well, which means iterate over last `startFrom` values.
+	 * @return {Function}
+	 * @access public
+	 */
+	iterator(back = false, startFrom = 0) {
+		return this[Symbol.iterator](back, startFrom);
 	}
 }
 

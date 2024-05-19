@@ -114,10 +114,9 @@ buffer.clear();
 console.log(buffer.size); // 0
 ```
 
-#### `[Symbol.iterator]()`
+#### `[Symbol.iterator](back=false)`
 
 Returns an iterator that can be used in a for-of loop.
-
 ```js
 const buffer = new NanoBuffer;
 
@@ -135,6 +134,24 @@ while (!r.done) {
 	r = it.next();
 }
 ```
+Additionally the iterator can be backward by manual iteration via call the method with parameter ```true```
+
+```js
+const buffer = new NanoBuffer;
+
+buffer.push('Hello');
+buffer.push('World!');
+
+const it = buffer[Symbol.iterator](true);
+let r = it.next();
+while (!r.done) {
+	console.log(r.value);
+	r = it.next();
+}
+
+// World Hello
+```
+
 
 ## License
 
