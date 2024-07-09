@@ -40,9 +40,24 @@ for (const value of buffer) {
 
 ### Constructor
 
-#### `new NanoBuffer(maxSize=10)`
+There are four possible constructor signatures.
 
-Creates a new `NanoBuffer` instance with the specified max size. Default max size is `10`.
+#### `new NanoBuffer()`
+
+Creates a new `NanoBuffer` instance. Default max size is `10`. 
+
+#### `new NanoBuffer(maxSize)`
+
+Creates a new `NanoBuffer` instance with the specified max size. 
+
+#### `new NanoBuffer(buffer)`
+
+Creates a new `NanoBuffer` instance initialised with predefined buffer. Max size is set to buffer length.
+
+#### `new NanoBuffer(buffer, maxSize)`
+
+Creates a new `NanoBuffer` instance initialised with predefined buffer. The second argument defines max size.
+
 
 ### Properties
 
@@ -62,6 +77,18 @@ console.log(buffer.maxSize); // 10
 buffer.maxSize = 20;
 
 console.log(buffer.maxSize); // 20
+```
+
+#### `maxSize` Number
+
+Gets default max size. It's possible in the future a configuration option, defining default maximal buffer size, will be added 
+
+```js
+const buffer = new NanoBuffer(2);
+
+console.log(buffer.size); // 0
+console.log(buffer.maxSize); // 2
+console.log(buffer.defaultMaxSize); // 10
 ```
 
 #### `size` Number
